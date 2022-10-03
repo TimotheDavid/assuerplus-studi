@@ -1,26 +1,54 @@
-import { createRouter, createWebHashHistory, RouteRecordRaw } from "vue-router";
 import HomeView from "../views/HomeView.vue";
+import FindPlaceView from "../views/FindPlaceView.vue";
+import SelectPlaceView from "../views/SelectPlaceView.vue";
+import SummaryView from "../views/SummaryView.vue";
+import WitnessView from "../views/WitnessView.vue";
+import DriverView from "../views/DriverView.vue";
+import ShortageView from "../views/ShortageView.vue";
+import { createRouter, createWebHashHistory } from "vue-router";
 
-const routes: Array<RouteRecordRaw> = [
+const routes = [
   {
     path: "/",
     name: "home",
     component: HomeView,
   },
   {
-    path: "/about",
-    name: "about",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/AboutView.vue"),
+    path: "/find",
+    name: "find",
+    component: FindPlaceView,
+  },
+  {
+    path: "/find/select",
+    name: "select",
+    props: true,
+    component: SelectPlaceView,
+  },
+  {
+    path: "/summary",
+    name: "summary",
+    component: SummaryView,
+  },
+  {
+    path: "/witness",
+    name: "witness",
+    component: WitnessView,
+  },
+  {
+    path: "/driver",
+    name: "driver",
+    component: DriverView,
+  },
+  {
+    path: "/shortage",
+    name: "shortage",
+    component: ShortageView,
   },
 ];
 
 const router = createRouter({
+  routes: routes,
   history: createWebHashHistory(),
-  routes,
 });
 
 export default router;
