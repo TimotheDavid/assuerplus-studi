@@ -54,7 +54,6 @@ const router = createRouter({
 
 router.beforeEach(async (to) => {
   const userStore = useUserStore();
-
   if (!userStore.getToken() && to.name !== "home") {
     return { name: "home" };
   }
