@@ -4,7 +4,6 @@
       <div class="w-20rem m-auto">
         <h1 class="text-center">Garage à proximité</h1>
       </div>
-      <p class="text-4xl m-auto">-</p>
     </div>
 
     <div id="map"></div>
@@ -17,7 +16,7 @@
       </div>
       <div>
         <h4>Distance</h4>
-        <p class="text-center text-lg">{{ garage.distance }}</p>
+        <p class="text-center text-lg">{{ garage.distance }} km</p>
       </div>
     </div>
     <Button label="Sélectionner" class="w-full my-4" @click="select"></Button>
@@ -39,11 +38,11 @@ let mapL = L;
 const garage = ref({
   name: "garage de la zorn",
   phone: "+066315533",
-  distance: "25km",
+  distance: "25",
 });
 
 function setView() {
-  const map = L.map("map").setView([locationStore.lat, locationStore.lng], 20);
+  const map = L.map("map").setView([locationStore.lat, locationStore.lng], 10);
 
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution:
@@ -91,6 +90,12 @@ onMounted(async () => {
 
 <style lang="scss" scoped>
 #map {
-  height: 600px;
+  height: 400px;
+}
+
+@media (min-width: 640px) {
+  #map {
+    height: 600px;
+  }
 }
 </style>

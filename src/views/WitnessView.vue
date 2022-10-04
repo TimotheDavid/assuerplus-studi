@@ -1,6 +1,6 @@
 <template>
   <main>
-    <p class="w-full text-left text-right px-4 text-4xl">+</p>
+    <RedirectToSummaryComponent />
     <div class="flex">
       <Button
         label="Ajouter des témoins"
@@ -63,10 +63,14 @@
 </template>
 
 <script setup>
+import RedirectToSummaryComponent from "../components/RedirectToSummaryComponent";
 import { ref } from "vue";
 import { useAccidentStore } from "../store/accidentStore";
+import { useRouter } from "vue-router";
+
 import * as api from "../api";
 const accidentStore = useAccidentStore();
+const router = useRouter();
 const input = ref({
   name: "",
   firstname: "",

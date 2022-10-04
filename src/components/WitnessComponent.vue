@@ -2,8 +2,8 @@
   <main v-for="(value, index) of witnesses" v-bind:key="index">
     <Button
       :label="createValue(value)"
-      disabled
-      class="w-full my-2 h-3rem"
+      class="w-full my-2 h-3rem lg:text-3xl"
+      icon=""
     ></Button>
   </main>
 </template>
@@ -16,7 +16,6 @@ const accidentStore = useAccidentStore();
 const witnesses = ref([]);
 async function startup() {
   const response = await api.getWitness(accidentStore.getFromStorage());
-  console.log({ response });
   if (response.status == 200) {
     witnesses.value = response.data;
   }
@@ -33,7 +32,7 @@ onMounted(async () => {
 
 <style scoped>
 button {
-  background: #9caeb7;
-  color: #6c757d;
+  background: #aebdca;
+  color: #ffff;
 }
 </style>

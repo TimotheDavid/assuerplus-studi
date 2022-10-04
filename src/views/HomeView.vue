@@ -1,5 +1,7 @@
 <template>
-  <main class="flex flex-column justify-content-around align-items-center">
+  <main
+    class="flex flex-column justify-content-around align-items-center w-full"
+  >
     <div
       class="flex flex-column justify-content-around align-items-center my-20"
     >
@@ -63,9 +65,11 @@ const login = ref({
 
 async function loginButton() {
   const response = await api.loginUser(login.value);
-  if (response.status == 201) {
+  if (response.status === 201) {
+    console.log(response.data);
     const accidentId = await api.createAccident(response.data.userId);
     accidentStore.setToStorage(accidentId.data.id);
+    userStore.setToken(response.data.access_token);
     userStore.userId = response.data.userId;
     userStore.setUserId();
     router.push("find");
@@ -76,10 +80,5 @@ async function loginButton() {
 <style scoped lang="scss">
 ::v-deep(.p-password) {
   width: 15rem;
-}
-
-main {
-  height: 60vh;
-  margin-top: 50%;
 }
 </style>

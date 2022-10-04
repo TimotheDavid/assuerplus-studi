@@ -16,9 +16,12 @@ import Checkbox from "primevue/checkbox";
 import InputNumber from "primevue/inputnumber";
 import Calendar from "primevue/calendar";
 import Textarea from "primevue/textarea";
+import FileUpload from "primevue/fileupload";
 
 const pinia = createPinia();
 const app = createApp(App);
+
+app.component("FileUpload", FileUpload);
 app.component("Textarea", Textarea);
 app.component("Calendar", Calendar);
 app.component("InputNumber", InputNumber);

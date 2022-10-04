@@ -6,6 +6,7 @@ import WitnessView from "../views/WitnessView.vue";
 import DriverView from "../views/DriverView.vue";
 import ShortageView from "../views/ShortageView.vue";
 import { createRouter, createWebHashHistory } from "vue-router";
+import { useUserStore } from "../store/userStore";
 
 const routes = [
   {
@@ -49,6 +50,14 @@ const routes = [
 const router = createRouter({
   routes: routes,
   history: createWebHashHistory(),
+});
+
+router.beforeEach(async (to) => {
+  const userStore = useUserStore();
+
+  if (!userStore.getToken() && to.name !== "home") {
+    return { name: "home" };
+  }
 });
 
 export default router;

@@ -1,40 +1,59 @@
 <template>
   <main class="w-full">
+    <LogoutComponent />
     <div>
-      <Button label="Ajouter des témoins" icon="pi pi-user" iconPos="right" />
+      <Button
+        label="Ajouter des témoins"
+        icon="pi pi-user"
+        iconPos="right"
+        @click="addWitness()"
+      />
       <WitnessComponent />
     </div>
     <div>
-      <Button label="Ajouter un conducteur" icon="pi pi-car" iconPos="right" />
-      <DriverComponentButton />
+      <Button
+        label="Ajouter un conducteur"
+        icon="pi pi-car"
+        iconPos="right"
+        @click="addDriver()"
+      />
+      <DriverComponent />
     </div>
     <div>
       <Button
         label="description des dégâts"
         icon="pi pi-plus"
         iconPos="right"
+        @click="addShortage()"
       />
     </div>
-    <div>
-      <Button label="date et heure" icon="pi pi-plus" iconPos="right" />
-      <Calendar
-        inputId="time24"
-        v-model="date7"
-        :showTime="true"
-        class="w-full"
-      />
-    </div>
+    <Button label="envoyer" icon="pi pi-check" icon-pos="right" @click="send">
+    </Button>
   </main>
 </template>
-<script>
+<script setup>
+import LogoutComponent from "../components/LogoutComponent.vue";
 import WitnessComponent from "../components/WitnessComponent.vue";
-export default {
-  components: { WitnessComponent },
-};
+import DriverComponent from "../components/DriverComponent.vue";
+import { ref } from "vue";
+import { useRouter } from "vue-router";
+
+const router = useRouter();
+
+function addWitness() {
+  router.push("/witness");
+}
+
+function addDriver() {
+  router.push("/driver");
+}
+
+function addShortage() {
+  router.push("/shortage");
+}
 </script>
 <style lang="scss" scoped>
 div {
-  background: red;
   width: 90%;
   margin: auto;
 }

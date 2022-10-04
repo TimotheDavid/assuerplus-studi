@@ -29,3 +29,7 @@ export async function updatelocations(
 ): Promise<AxiosResponse> {
   return http.put(BASE_URL + "/location", location);
 }
+
+export async function getDriver(accidentId: string): Promise<AxiosResponse> {
+  return http.get(BASE_URL + "/" + accidentId);
+}
