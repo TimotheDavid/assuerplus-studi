@@ -35,10 +35,13 @@
 import LogoutComponent from "../components/LogoutComponent.vue";
 import WitnessComponent from "../components/WitnessComponent.vue";
 import DriverComponent from "../components/DriverComponent.vue";
-import { ref } from "vue";
 import { useRouter } from "vue-router";
+import { useToast } from "primevue/usetoast";
+import { useUserStore } from "../store/userStore";
 
+const toast = useToast();
 const router = useRouter();
+const userStore = useUserStore();
 
 function addWitness() {
   router.push("/witness");
@@ -50,6 +53,17 @@ function addDriver() {
 
 function addShortage() {
   router.push("/shortage");
+}
+
+function send() {
+  toast.add({
+    severity: "info",
+    summary:
+      "Merci d'avoir ajouté vos informations d'accident, nous reviendrons vers vous le plus rapidement possible",
+    life: 3000,
+  });
+  userStore.resetToken();
+  router.push("/");
 }
 </script>
 <style lang="scss" scoped>

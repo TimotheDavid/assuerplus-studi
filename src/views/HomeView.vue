@@ -45,6 +45,11 @@
         class="w-full"
       ></Button>
     </div>
+    <div v-if="errors">
+      <Message severity="warn" :closable="true" :life="200"
+        >User not found</Message
+      >
+    </div>
   </main>
 </template>
 <script setup>
@@ -58,21 +63,25 @@ const conditionChecked = ref(false);
 const router = useRouter();
 const userStore = useUserStore();
 const accidentStore = useAccidentStore();
+
 const login = ref({
   email: "",
   password: "",
 });
 
+const errors = ref(false);
+
 async function loginButton() {
   const response = await api.loginUser(login.value);
   if (response.status === 201) {
-    console.log(response.data);
     const accidentId = await api.createAccident(response.data.userId);
     accidentStore.setToStorage(accidentId.data.id);
-    userStore.setToken(response.data.access_token);
+    userStore.setToken(response.data.token);
     userStore.userId = response.data.userId;
     userStore.setUserId();
     router.push("find");
+  } else if (response.status !== 201) {
+    errors.value = true;
   }
 }
 </script>

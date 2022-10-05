@@ -15,7 +15,6 @@ const userStore = useUserStore();
 const router = useRouter();
 function logout() {
   userStore.resetToken();
-  console.log(userStore.token);
   router.push("/");
 }
 </script>

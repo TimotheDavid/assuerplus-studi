@@ -16,7 +16,7 @@ const accidentStore = useAccidentStore();
 const witnesses = ref([]);
 async function startup() {
   const response = await api.getWitness(accidentStore.getFromStorage());
-  if (response.status == 200) {
+  if (response.status === 200) {
     witnesses.value = response.data;
   }
 }

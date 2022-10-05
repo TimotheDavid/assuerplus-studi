@@ -49,26 +49,57 @@
         label="se géolocaliser"
         iconPos="right"
         class="h-3rem"
+        @click="findByGeolocation"
       />
     </div>
   </main>
 </template>
 
 <script setup>
-import { ref } from "vue";
+import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
 import { uselocationStore } from "../store/locationStore";
 import { useAccidentStore } from "../store/accidentStore";
+import { useToast } from "primevue/usetoast";
 import * as api from "../api";
 
 const router = useRouter();
 const locationStore = uselocationStore();
 const accidentStore = useAccidentStore();
+const toast = useToast();
 const findPlace = ref({
   address: "",
   city: "",
   postal_code: "",
 });
+
+function findByGeolocation() {
+  if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(
+      async (success, error) => {
+        locationStore.lat = success.coords.latitude;
+        locationStore.lng = success.coords.longitude;
+        const data = {
+          accidentId: accidentStore.getFromStorage(),
+          location: {
+            lng: success.coords.latitude,
+            lat: success.coords.longitude,
+          },
+        };
+        await api.updatelocations(data);
+        router.push("/find/select");
+      },
+      (error) => {
+        toast.add({
+          severity: "info",
+          summary:
+            "si vous ne voulez pas être géolocaliser vous devez rentrer vous mêmes les informations",
+          life: 3000,
+        });
+      }
+    );
+  }
+}
 
 async function findAdress() {
   const location = {
@@ -78,7 +109,6 @@ async function findAdress() {
 
   locationStore.lat = location.lat;
   locationStore.lng = location.lng;
-  console.log(accidentStore.getFromStorage());
   const data = {
     accidentId: accidentStore.getFromStorage(),
     location: {

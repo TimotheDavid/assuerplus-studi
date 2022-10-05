@@ -17,10 +17,14 @@ import InputNumber from "primevue/inputnumber";
 import Calendar from "primevue/calendar";
 import Textarea from "primevue/textarea";
 import FileUpload from "primevue/fileupload";
-
+import ToastService from "primevue/toastservice";
+import Message from "primevue/message";
+import Toast from "primevue/toast";
 const pinia = createPinia();
 const app = createApp(App);
 
+app.component("Message", Message);
+app.component("Toast", Toast);
 app.component("FileUpload", FileUpload);
 app.component("Textarea", Textarea);
 app.component("Calendar", Calendar);
@@ -32,5 +36,6 @@ app.component("Password", Password);
 app.component("Avatar", Avatar);
 app.use(PrimeVue);
 app.use(router);
+app.use(ToastService);
 app.use(pinia);
 app.mount("#app");

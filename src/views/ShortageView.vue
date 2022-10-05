@@ -18,12 +18,27 @@
         :autoResize="true"
         rows="5"
         cols="30"
+        :class="{ 'p-invalid': send && !input.description }"
       />
+      <span v-if="!input.description && send">
+        <small class="p-error"
+          >La description de l'accident est obligatoire.</small
+        >
+      </span>
     </span>
 
     <span class="p-float-label my-3 flex flex flex-column">
       <p class="my-3 mx-5">Date et heure de l'accident</p>
-      <Calendar v-model="input.date" :showTime="true" class="w-10 m-auto" />
+      <Calendar
+        v-model="input.date"
+        :showTime="true"
+        class="w-10 m-auto"
+        :class="{ 'p-invalid': send && !input.date }"
+      />
+
+      <span v-if="!input.date && send">
+        <small class="p-error">Une date d'accident est obligatoire.</small>
+      </span>
     </span>
 
     <div class="flex my-8 justify-content-center">
@@ -37,16 +52,19 @@
 <script setup>
 import RedirectToSummaryComponent from "../components/RedirectToSummaryComponent";
 import { useAccidentStore } from "../store/accidentStore";
+import { useToast } from "primevue/usetoast";
 import { ref } from "vue";
 import * as api from "../api";
 
 const accidentStore = useAccidentStore();
+const toast = useToast();
 
 const file = ref(null);
+const send = ref(false);
 const input = ref({
-  description: "",
-  accidentId: "",
-  date: "",
+  description: null,
+  accidentId: null,
+  date: null,
 });
 
 async function uploadFiles() {
@@ -60,16 +78,34 @@ async function uploadFiles() {
   const response = await api.upload(data);
 
   if (response.status !== 201) {
-    return;
+    toast.add({
+      severity: "error",
+      summary:
+        "contacter un administrateur, ou attendez que l'application redémarre",
+    });
   }
+  send.value = false;
 }
 
 async function save() {
-  const date = new Date(input.value.date);
-
-  input.value.date = date.getTime();
+  send.value = true;
   input.value.accidentId = accidentStore.getFromStorage();
-  await api.updateDescription(input.value);
+
+  const nullish = Object.values(input.value).every((item) => item != null);
+  if (nullish) {
+    input.value.date = input.value.date.getTime();
+    const response = await api.updateDescription(input.value);
+    if (response.status > 300) {
+      toast.add({
+        severity: "error",
+        summary:
+          "contacter un administrateur, ou attendez que l'application redémarre",
+      });
+    }
+  }
+
+  send.value = false;
+  input.value = {};
 }
 </script>
 
