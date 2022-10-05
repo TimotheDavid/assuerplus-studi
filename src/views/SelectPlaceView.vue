@@ -88,7 +88,7 @@ onMounted(async () => {
 });
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
 #map {
   height: 400px;
 }

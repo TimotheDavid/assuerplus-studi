@@ -120,7 +120,7 @@ async function findAdress() {
   router.push("/find/select");
 }
 </script>
-<style lang="scss" scoped>
+<style lang="css" scoped>
 input,
 button {
   width: 80%;

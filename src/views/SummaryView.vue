@@ -66,7 +66,7 @@ function send() {
   router.push("/");
 }
 </script>
-<style lang="scss" scoped>
+<style lang="css" scoped>
 div {
   width: 90%;
   margin: auto;

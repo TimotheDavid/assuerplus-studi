@@ -86,7 +86,7 @@ async function loginButton() {
 }
 </script>
 
-<style scoped lang="scss">
+<style scoped lang="css">
 ::v-deep(.p-password) {
   width: 15rem;
 }
