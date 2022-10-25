@@ -44,11 +44,13 @@ const garage = ref({
 function setView() {
   const map = L.map("map").setView([locationStore.lat, locationStore.lng], 10);
 
+  console.log(map);
   L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
 
+  console.log(map);
   mapL = map;
 }
 
@@ -83,7 +85,7 @@ async function getMaps() {
 
 onMounted(async () => {
   await getMaps();
-  setView();
+  await setView();
   setMarker();
 });
 </script>
