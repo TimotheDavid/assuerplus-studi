@@ -49,8 +49,6 @@ function setView() {
     attribution:
       '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   }).addTo(map);
-
-  console.log(map);
   mapL = map;
 }
 
